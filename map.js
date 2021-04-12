@@ -100,19 +100,34 @@
 		onEachFeature: onEachFeature
 	}).addTo(map);
 
-
+/*
 //checkbox functions
 function countyLines()
 {
 	var check = document.getElementById("cb1");
+
+	if(check.checked == true)
+	{
+		//we update!
+	}
 }
 
 function juvenileInstitutions()
 {
+	var check = document.getElementById("cb2");
 
+	if(check.checked == true)
+	{
+		//we update!
+	}
 }
 
 function adultInstitutions()
 {
+	var check = document.getElementById("cb3");
 
-}
+	if(check.checked == true)
+	{
+		//we update!
+	}
+}*/

@@ -26,6 +26,8 @@
 		this._div.innerHTML = '<h4>Covid Data</h4>' +  (props ?
 			'County Name: <b>' + props.name + '</b><br />' + 'Add General Covid Data Here' + ' ex: people infected'
 			: 'Hover over a state or click on it info');
+
+		displayStats(props);
 	};
 
 	info.addTo(map);
@@ -131,3 +133,9 @@ function adultInstitutions()
 		//we update!
 	}
 }*/
+
+function displayStats(props)
+{
+	var county = document.getElementById("stats");
+	county = props.name;
+}

@@ -99,3 +99,20 @@
 		style: style,
 		onEachFeature: onEachFeature
 	}).addTo(map);
+
+
+//checkbox functions
+function countyLines()
+{
+	var check = document.getElementById("cb1");
+}
+
+function juvenileInstitutions()
+{
+
+}
+
+function adultInstitutions()
+{
+
+}

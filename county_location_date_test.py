@@ -50,7 +50,7 @@ def select_elements(conn, county, date):
                     date = date+"-"+str(array[2])
 
                 print(date)
-                cur.execute("SELECT * FROM county_cases WHERE date='"+date+"'")
+                cur.execute("SELECT * FROM county_cases WHERE date='"+date+"' and county='"+county+"'")
                 rows = cur.fetchall()
                 print(rows)
         else: 

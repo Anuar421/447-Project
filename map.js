@@ -26,6 +26,8 @@
 		this._div.innerHTML = '<h4>Covid Data</h4>' +  (props ?
 			'County Name: <b>' + props.name + '</b><br />' + 'Add General Covid Data Here' + ' ex: people infected'
 			: 'Hover over a state or click on it info');
+
+		
 	};
 
 	info.addTo(map);
@@ -99,3 +101,41 @@
 		style: style,
 		onEachFeature: onEachFeature
 	}).addTo(map);
+
+/*
+//checkbox functions
+function countyLines()
+{
+	var check = document.getElementById("cb1");
+
+	if(check.checked == true)
+	{
+		//we update!
+	}
+}
+
+function juvenileInstitutions()
+{
+	var check = document.getElementById("cb2");
+
+	if(check.checked == true)
+	{
+		//we update!
+	}
+}
+
+function adultInstitutions()
+{
+	var check = document.getElementById("cb3");
+
+	if(check.checked == true)
+	{
+		//we update!
+	}
+}
+
+function displayStats(props)
+{
+	var county = document.getElementById("stats");
+	county = props.name;
+}*/

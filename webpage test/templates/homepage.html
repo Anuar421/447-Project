@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+	<!-- more style sheets for formatting w bootstrap... can be removed if unncessary-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	
+	<style>
+
+		h1 {text-align: center;}
+
+		html, body {
+			text-align: center;
+			height: 100%;
+			margin: 0;
+		}
+		#map {
+			width: 600px; 
+			height: 400px;
+		}
+	</style>
+
+	<style>
+	#map { width: 800px; height: 500px; }
+.info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } .info h4 { margin: 0 0 5px; color: #777; }
+.legend { text-align: left; line-height: 18px; color: #555; } .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }
+</style>
+
+
+    <title>Map Homepage</title>
+
+
+
+
+</head>
+<body>
+
+   <h1 class = "center"> Covid-19 in Criminal Justice Facilites </h1>
+  	
+   <br>
+
+   <div class="container-fluid">
+		<div class="row">
+			<div class="col-4">
+
+				<label for="date">Date: </label>
+				<input type="date" id="date" name="Date: ">
+				
+			</div>
+			<div class="col-8">
+				
+				<bold>Display Options</bold>				
+				<input type="checkbox" id="cb1" name="countyLines" >
+				<label for="cb1"> County Lines</label>
+
+				<input type="checkbox" id="cb2" name="juvi" >
+				<label for="cb2"> Juvenile Institutions</label>
+
+				<input type="checkbox" id="cb3" name="adult" >
+				<label for="cb3"> Adult Institutions</label>
+
+				<input type="checkbox" id="cb4" name="adultLeased" >
+				<label for="cb4"> Adult Institutions (leased) </label>
+
+				<input type="checkbox" id="cb5" name="hotZones" >
+				<label for="cb5"> Hot Zones</label>
+
+			</div>
+		</div>
+   </div>
+
+   <div class="container-fluid">
+	   	<div class="row">
+			<div class="col-7" id='map'></div>
+
+			<div class="col-5" id="stats">Stats:</div>
+		</div>
+	</div>
+  
+   <script type="text/javascript" src="CA/counties.js"></script>
+
+   <script type="text/javascript" src="map.js"> </script>
+
+
+
+</body>
+</html>

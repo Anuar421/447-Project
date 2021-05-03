@@ -50,7 +50,7 @@ def select_elements_by_date(conn, date):
             print(rows)
     else: 
         for row in rows:
-            print(row)
+            print(type(row))
         
 if __name__ == '__main__':
     database = "county_cases.db"

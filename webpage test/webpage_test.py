@@ -18,8 +18,8 @@ def counties():
     return render_template('CA/counties.js')
 
 
-@app.route('/find-date/', methods=['POST'])
-def findDate():
+@app.route('/find-date-county/', methods=['POST'])
+def findDateCounty():
     print(request.form['Date: '])
     date = request.form['Date: ']
     county = request.form['County: ']
@@ -74,6 +74,10 @@ def findDate():
 
     #return render_template('homepage.html', county_cases=county_cases, county_deaths=county_deaths)
     return redirect(url_for('users', county_cases=county_cases, county_deaths=county_deaths))
+
+@app.route('/find-date-prison', methods=['POST']):
+def findDatePrison():
+    return redirect('/')
 
 @app.route('/', methods=['GET', 'POST'])
 def users():

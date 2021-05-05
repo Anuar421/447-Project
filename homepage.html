@@ -46,16 +46,16 @@
 </head>
 <body>
 
-   <h1 class = "center"> Covid-19 in Criminal Justice Facilites </h1>
-  	
-   <br>
+	<h1 class="center"> Covid-19 in Criminal Justice Facilites </h1>
 
-   <div class="container-fluid">
+	<br>
+
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-4">
 
-				<form action="/find-date/">
-					
+				<form method="post" action="/find-date/">
+
 					<label for="date">Date: </label>
 					<input type="date" id="date" name="Date: ">
 
@@ -65,42 +65,45 @@
 					<input type="submit" value="Submit Date" />
 
 				</form>
-				
+
 			</div>
 			<div class="col-8">
-				
-				<bold>Display Options</bold>				
-				<input type="checkbox" id="cb1" name="countyLines" >
+
+				<bold>Display Options</bold>
+				<input type="checkbox" id="cb1" name="countyLines">
 				<label for="cb1"> County Lines</label>
 
-				<input type="checkbox" id="cb2" name="juvi" >
+				<input type="checkbox" id="cb2" name="juvi">
 				<label for="cb2"> Juvenile Institutions</label>
 
-				<input type="checkbox" id="cb3" name="adult" >
+				<input type="checkbox" id="cb3" name="adult">
 				<label for="cb3"> Adult Institutions</label>
 
-				<input type="checkbox" id="cb4" name="adultLeased" >
+				<input type="checkbox" id="cb4" name="adultLeased">
 				<label for="cb4"> Adult Institutions (leased) </label>
 
-				<input type="checkbox" id="cb5" name="hotZones" >
+				<input type="checkbox" id="cb5" name="hotZones">
 				<label for="cb5"> Hot Zones</label>
 
 			</div>
 		</div>
-   </div>
+	</div>
 
-   <div class="container-fluid">
-	   	<div class="row">
+	<div class="container-fluid">
+		<div class="row">
 			<div class="col-7" id='map'></div>
 
 			<div class="col-5" id="stats">Stats:</div>
 		</div>
 	</div>
-  
-   <script type="text/javascript" src="CA/counties.js"></script>
 
-   <script type="text/javascript" src="map.js"> </script>
+	<script type="text/javascript" src="CA/counties.js"></script>
 
+	<script type="text/javascript" src="map.js"></script>
+
+	<p>Cases in county: {{county_cases}}</p><br>
+	<p>Deaths in county: {{county_deaths}}</p>
+	<!--Insert county-specific stats here.-->
 
 
 </body>

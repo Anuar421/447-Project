@@ -1,6 +1,6 @@
 import sqlite3
 
-from flask import Flask, render_template, request, flash, redirect
+from flask import Flask, render_template, request, flash, redirect, url_for
 from tables import Results
 app = Flask(__name__)
 app.secret_key = "secret key"
@@ -22,6 +22,7 @@ def counties():
 def findDate():
     print(request.form['Date: '])
     date = request.form['Date: ']
+    county = request.form['County: ']
 
     conn = None
     try:
@@ -30,7 +31,7 @@ def findDate():
         print(e)
 
     cur = conn.cursor()
-    cur.execute("SELECT * FROM county_cases WHERE date='"+date+"'")
+    cur.execute("SELECT * FROM county_cases WHERE date='"+date+"' AND county='"+county+"' AND state='California'")
     rows = cur.fetchall()
     if not rows:
         print("Invalid date; moving to closest earliest date.")
@@ -60,19 +61,24 @@ def findDate():
                 date = date+"-"+str(array[2])
 
             print(date)
-            cur.execute("SELECT * FROM county_cases WHERE date='"+date+"'")
+            cur.execute("SELECT * FROM county_cases WHERE date='"+date+"' AND county='"+county+"' AND state='California'")
             rows = cur.fetchall()
             print(rows)
     else: 
         for row in rows:
             print(row)
 
-    return redirect('/')
+    county_cases = rows[0][4]
+    county_deaths = rows[0][5]
+    print("county_cases: ",county_cases,"; county_deaths: ",county_deaths)
 
-@app.route('/')
+    #return render_template('homepage.html', county_cases=county_cases, county_deaths=county_deaths)
+    return redirect(url_for('users', county_cases=county_cases, county_deaths=county_deaths))
+
+@app.route('/', methods=['GET', 'POST'])
 def users():
     try:
-        return render_template('homepage.html')
+        return render_template('homepage.html', county_cases = request.args.get('county_cases'), county_deaths = request.args.get('county_deaths'))
     except Exception as e:
         print(e)
 

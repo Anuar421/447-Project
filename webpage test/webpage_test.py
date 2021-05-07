@@ -22,8 +22,11 @@ def counties():
 def findDateCounty():
     print(request.form['Date: '])
     date = request.form['Date: ']
+
     print(request.form['County: '])
     county = request.form['County: ']
+
+    
     print(request.form['Prison: '])
     prison = request.form['Prison: ']
     county_cases = 0

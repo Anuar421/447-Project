@@ -79,6 +79,16 @@
 		map.fitBounds(e.target.getBounds());
 	}
 
+	//get county name and state in future
+	function getCountyCases(e) {
+		$.ajax({
+			type: "POST",
+			url: "/find-date",
+			//data: { param: input },
+			//success: callbackFunc
+		});
+
+	}
 
 
 	function onEachFeature(feature, layer) {
@@ -88,7 +98,8 @@
 		layer.on({
 			mouseover: highlightFeature,
 			mouseout: resetHighlight,
-			click: zoomToFeature
+			click: zoomToFeature,
+			click: getCountyCases
 		});
 
 

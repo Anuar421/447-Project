@@ -28,7 +28,7 @@ def findDateCounty():
     print(request.form['County: '])
     county = request.form['County: ']
 
-    if (county == None):
+    if (county == ''):
         county = request.json['county_name']
 
     print(request.form['County: '])

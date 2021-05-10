@@ -22,7 +22,8 @@ def counties():
 def findDateCounty():
     print(request.form['Date: '])
     date = request.form['Date: ']
-
+    if (date == None):
+        date = '2021-03-21'
 
     print(request.form['County: '])
     county = request.form['County: ']

@@ -22,7 +22,7 @@ def counties():
 def findDateCounty():
     print(request.form['Date: '])
     date = request.form['Date: ']
-    if (date == None):
+    if (date == ''):
         date = '2021-03-21'
 
     print(request.form['County: '])
@@ -41,6 +41,8 @@ def findDateCounty():
     residents_deaths = 0
     staff_confirmed = 0
     staff_deaths = 0
+    print('date:', date)
+    print('county:',county)
 
     if (prison == ''):
         conn = None

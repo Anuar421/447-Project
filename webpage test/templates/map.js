@@ -36,8 +36,35 @@
 	//***************************************************************************************//
 
 
+	// get color depending on population density value
+	function getColor(name) {
 
-	//This is for styling the geojson
+		//find the covid data for that county
+		//covid_cases = ;
+
+		$.ajax({
+			type: "POST",
+			url: "/shading/",
+			data: {data: name}
+		  }).done(function( o ) {
+			 //soemthing happens
+		  });
+		  
+		
+		var covid_cases = document.getElementsByName('my_county_cases').content;
+
+		console.log("covid_cases: " + covid_cases);
+
+		return covid_cases > 30000 ? 'red' :
+				covid_cases > 10000  ? '#BD0026' :
+				covid_cases > 5000  ? '#E31A1C' :
+				covid_cases > 1000  ? '#FC4E2A' :
+				covid_cases > 500   ? '#FD8D3C' :
+				covid_cases > 100   ? '#FEB24C' :
+				covid_cases > 10  ? '#FED976' :
+										'white';
+	}
+
 	function style(feature) {
 		return {
 			weight: 2,
@@ -45,9 +72,11 @@
 			color: 'white',
 			dashArray: '3',
 			fillOpacity: 0.7,
-			fillColor: 'red'
+			fillColor: getColor(feature.properties.name) //pass in covid cases to shade
 		};
 	}
+
+
 
 	function highlightFeature(e) {
 		var layer = e.target;
@@ -81,24 +110,25 @@
 
 
 	//get county name and state in future
-	function getCountyCases(e) {
+	function getCountyCases(e,county_name) {
 
-		console.log("get county cases starts")
-
+		/*
 		$.ajax({
-			url: "/find-date/",
+			url : "/find-date/",
 			type: 'POST',
-
-			data: $('form').serialize(),
+			
+			data: {'click_Data':county_name},
 
 			success: function(){
 				console.log("success county cases");
 				},
-				error: function(error){
-					console.log(error );
+			error: function(error){
+					console.log(error);
 				}
 		});
-
+		
+		
+		*/
 	}
 
 
@@ -109,7 +139,7 @@
 		layer.on({
 			mouseover: highlightFeature,
 			mouseout: resetHighlight,
-			click: getCountyCases, zoomToFeature
+			click: zoomToFeature
 		});
 
 

@@ -18,6 +18,76 @@ def counties():
     return render_template('CA/counties.js')
 
 
+
+#Test for shading
+@app.route('/shading/', methods=['POST'])
+def shading():
+
+    print(request.form['data'])
+    county = request.form['data']
+    date = '2021-03-21'
+
+    try:
+        conn = sqlite3.connect("county_cases.db")
+    except Error as e:
+        print(e)
+
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM county_cases WHERE date='"+date+"' AND county='"+county+"' AND state='California'")
+    rows = cur.fetchall()
+    if not rows:
+        print("Invalid date; moving to closest earliest date.")
+        while not rows:
+            array = date.split('-')
+            array[1] = array[1].lstrip('0')
+            array[2] = array[2].lstrip('0')
+            print(array)
+            if int(array[2]) > 1:
+                array[2] = int(array[2]) - 1
+            elif int(array[1]) > 1:
+                array[2] = 31
+                array[1] = int(array[1]) - 1
+            else :
+                array[0] = int(array[0]) - 1
+                array[1] = 12
+                array[2] = 31
+
+            if int(array[1]) < 10:
+                date = str(array[0])+"-0"+str(array[1])
+            else:
+                date = str(array[0])+"-"+str(array[1])
+
+            if int(array[2]) < 10:
+                date = date+"-0"+str(array[2])
+            else:
+                date = date+"-"+str(array[2])
+
+            print(date)
+            cur.execute("SELECT * FROM county_cases WHERE date='"+date+"' AND county='"+county+"' AND state='California'")
+            rows = cur.fetchall()
+            print(rows)
+    else: 
+        for row in rows:
+            print(row)
+
+    county_cases = rows[0][4]
+    county_deaths = rows[0][5]
+    if county_cases == None:
+        county_cases = 0
+    if county_deaths == None:
+        county_deaths = 0
+
+    print("county_cases: ",county_cases,"; county_deaths: ",county_deaths)
+
+ 
+
+
+    return redirect(url_for('users', county_cases=county_cases, county_deaths=0, residents_confirmed=0, residents_deaths=0, 
+                                staff_confirmed=0, staff_deaths=0))
+
+
+
+
 @app.route('/find-date/', methods=['POST'])
 def findDateCounty():
     print(request.form['Date: '])
@@ -29,20 +99,23 @@ def findDateCounty():
     county = request.form['County: ']
 
     if (county == ''):
-        county = request.json['county_name']
+        county = request.form['click_Data']
 
     print(request.form['County: '])
 
     print(request.form['Prison: '])
     prison = request.form['Prison: ']
+
     county_cases = 0
     county_deaths = 0
     residents_confirmed = 0
     residents_deaths = 0
     staff_confirmed = 0
     staff_deaths = 0
+
     print('date:', date)
     print('county:',county)
+
 
     if (prison == ''):
         conn = None

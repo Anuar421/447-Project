@@ -35,6 +35,7 @@
 	//end of adding state info on hover
 	//***************************************************************************************//
 
+	
 
 	// get color depending on population density value
 	function getColor(name) {
@@ -47,22 +48,22 @@
 			url: "/shading/",
 			data: {data: name}
 		  }).done(function( o ) {
-			 //soemthing happens
+			//were done;
 		  });
-		  
 		
-		var covid_cases = document.getElementsByName('my_county_cases').content;
-
-		console.log("covid_cases: " + covid_cases);
-
-		return covid_cases > 30000 ? 'red' :
+		  /*
+		var order = document.getElementById({county_cases}).value;
+		
+		console.log();
+		  */
+		return  covid_cases > 30000  ? 'red' :
 				covid_cases > 10000  ? '#BD0026' :
-				covid_cases > 5000  ? '#E31A1C' :
-				covid_cases > 1000  ? '#FC4E2A' :
-				covid_cases > 500   ? '#FD8D3C' :
-				covid_cases > 100   ? '#FEB24C' :
-				covid_cases > 10  ? '#FED976' :
-										'white';
+				covid_cases > 5000   ? '#E31A1C' :
+				covid_cases > 1000   ? '#FC4E2A' :
+				covid_cases > 500    ? '#FD8D3C' :
+				covid_cases > 100    ? '#FEB24C' :
+				covid_cases > 10     ? '#FED976' :
+										  'white';
 	}
 
 	function style(feature) {
@@ -72,7 +73,7 @@
 			color: 'white',
 			dashArray: '3',
 			fillOpacity: 0.7,
-			fillColor: getColor(feature.properties.name) //pass in covid cases to shade
+			fillColor: 'red'//getColor(feature.properties.name) //pass in covid cases to shade
 		};
 	}
 

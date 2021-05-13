@@ -23,7 +23,8 @@ def counties():
 @app.route('/shading/', methods=['POST'])
 def shading():
 
-    print(request.form['data'])
+    #print("/shading/   request.form['data']: "+request.form['data'])
+
     county = request.form['data']
     date = '2021-03-21'
 
@@ -35,6 +36,8 @@ def shading():
     cur = conn.cursor()
     cur.execute("SELECT * FROM county_cases WHERE date='"+date+"' AND county='"+county+"' AND state='California'")
     rows = cur.fetchall()
+
+
     if not rows:
         print("Invalid date; moving to closest earliest date.")
         while not rows:
@@ -66,18 +69,20 @@ def shading():
             cur.execute("SELECT * FROM county_cases WHERE date='"+date+"' AND county='"+county+"' AND state='California'")
             rows = cur.fetchall()
             print(rows)
+
     else: 
         for row in rows:
             print(row)
 
     county_cases = rows[0][4]
     county_deaths = rows[0][5]
+
     if county_cases == None:
         county_cases = 0
     if county_deaths == None:
         county_deaths = 0
 
-    print("county_cases: ",county_cases,"; county_deaths: ",county_deaths)
+    #print("county_cases: ",county_cases,"; county_deaths: ",county_deaths)
 
  
 
@@ -88,8 +93,11 @@ def shading():
 
 
 
+
+
 @app.route('/find-date/', methods=['POST'])
 def findDateCounty():
+    
     print(request.form['Date: '])
     date = request.form['Date: ']
     if (date == ''):
@@ -98,8 +106,6 @@ def findDateCounty():
     print(request.form['County: '])
     county = request.form['County: ']
 
-    if (county == ''):
-        county = request.form['click_Data']
 
     print(request.form['County: '])
 
@@ -235,6 +241,7 @@ def findDateCounty():
         #return render_template('homepage.html', county_cases=county_cases, county_deaths=county_deaths)
         return redirect(url_for('users', county_cases=county_cases, county_deaths=county_deaths, residents_confirmed=residents_confirmed, residents_deaths=residents_deaths, 
                                 staff_confirmed=staff_confirmed, staff_deaths=staff_deaths))
+
 
 @app.route('/find-date-prison', methods=['POST'])
 def findDatePrison():

@@ -58,13 +58,13 @@
 
 					<label for="date">Date: </label>
 					<input type="date" id="date" name="Date: ">
-
+					<br>
 					<label for="county">County: </label>
 					<input type="text" id="county" name="County: ">
-
+					<br>
 					<label for="prison">Prison: </label>
 					<input type="text" id="Prison" name="Prison: ">
-
+					<br>
 					<input type="submit" value="Submit Search" />
 
 				</form>
@@ -96,23 +96,32 @@
 		<div class="row">
 			<div class="col-7" id='map'></div>
 
-			<div class="col-5" id="stats">Stats:</div>
+			<div class="col-5" id="stats">
+				
+				<p style="text-align:left;"> Stats: </p>
+				<p style="text-align:left;"> Cases in county: {{county_cases}}</p>
+				<p style="text-align:left;">Deaths in county: {{county_deaths}}</p>
+				<p style="text-align:left;">Confirmed resident cases in prison: {{residents_confirmed}}</p>
+				<p style="text-align:left;">Confirmed resident deaths in prison: {{residents_deaths}}</p>
+				<p style="text-align:left;">Confirmed staff cases in prison: {{staff_confirmed}}</p>
+				<p style="text-align:left;">Confirmed staff deaths in prison: {{staff_deaths}}</p>
+				<!--Insert county-specific stats here.-->
+
+
+			</div>
+
+
+
 		</div>
 	</div>
 
-	<meta name="my_county_cases" content={{county_cases}} />
+	<!--<meta name="my_county_cases" content={{county_cases}} />-->
 
 	<script type="text/javascript" src="CA/counties.js"></script>
 
 	<script type="text/javascript" src="map.js"></script>
 
-	<p>Cases in county: {{county_cases}}</p>
-	<p>Deaths in county: {{county_deaths}}</p>
-	<p>Confirmed resident cases in prison: {{residents_confirmed}}</p>
-	<p>Confirmed resident deaths in prison: {{residents_deaths}}</p>
-	<p>Confirmed staff cases in prison: {{staff_confirmed}}</p>
-	<p>Confirmed staff deaths in prison: {{staff_deaths}}</p>
-	<!--Insert county-specific stats here.-->
+	
 
 
 </body>

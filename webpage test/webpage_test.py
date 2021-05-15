@@ -134,55 +134,53 @@ def findDateCounty():
         rows = cur.fetchall()
         if not rows:
             print("Invalid county name")
-            return redirect(url_for('users', county_cases=0, county_deaths=0, residents_confirmed=0, residents_deaths=0, 
-                                staff_confirmed=0, staff_deaths=0))
-
-        cur.execute("SELECT * FROM county_cases WHERE date='"+date+"' AND county='"+county+"' AND state='California'")
-        rows = cur.fetchall()
-        if not rows:
-            print("Invalid date; moving to closest earliest date.")
-            while not rows:
-                array = date.split('-')
-                array[1] = array[1].lstrip('0')
-                array[2] = array[2].lstrip('0')
-                if int(array[0]) < 2020:
-                    rows= [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-                else:
-                    print(array)
-                    if int(array[2]) > 1:
-                        array[2] = int(array[2]) - 1
-                    elif int(array[1]) > 1:
-                        array[2] = 31
-                        array[1] = int(array[1]) - 1
-                    else :
-                        array[0] = int(array[0]) - 1
-                        array[1] = 12
-                        array[2] = 31
-
-                    if int(array[1]) < 10:
-                        date = str(array[0])+"-0"+str(array[1])
-                    else:
-                        date = str(array[0])+"-"+str(array[1])
-
-                    if int(array[2]) < 10:
-                        date = date+"-0"+str(array[2])
-                    else:
-                        date = date+"-"+str(array[2])
-
-                    print(date)
-                    cur.execute("SELECT * FROM county_cases WHERE date='"+date+"' AND county='"+county+"' AND state='California'")
-                    rows = cur.fetchall()
-                    print(rows)
         else: 
-            for row in rows:
-                print(row)
+            cur.execute("SELECT * FROM county_cases WHERE date='"+date+"' AND county='"+county+"' AND state='California'")
+            rows = cur.fetchall()
+            if not rows:
+                print("Invalid date; moving to closest earliest date.")
+                while not rows:
+                    array = date.split('-')
+                    array[1] = array[1].lstrip('0')
+                    array[2] = array[2].lstrip('0')
+                    if int(array[0]) < 2020:
+                        rows= [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+                    else:
+                        print(array)
+                        if int(array[2]) > 1:
+                            array[2] = int(array[2]) - 1
+                        elif int(array[1]) > 1:
+                            array[2] = 31
+                            array[1] = int(array[1]) - 1
+                        else :
+                            array[0] = int(array[0]) - 1
+                            array[1] = 12
+                            array[2] = 31
 
-        county_cases = rows[0][4]
-        county_deaths = rows[0][5]
-        if county_cases == None:
-            county_cases = 0
-        if county_deaths == None:
-            county_deaths = 0
+                        if int(array[1]) < 10:
+                            date = str(array[0])+"-0"+str(array[1])
+                        else:
+                            date = str(array[0])+"-"+str(array[1])
+
+                        if int(array[2]) < 10:
+                            date = date+"-0"+str(array[2])
+                        else:
+                            date = date+"-"+str(array[2])
+
+                        print(date)
+                        cur.execute("SELECT * FROM county_cases WHERE date='"+date+"' AND county='"+county+"' AND state='California'")
+                        rows = cur.fetchall()
+                        print(rows)
+            else: 
+                for row in rows:
+                    print(row)
+
+            county_cases = rows[0][4]
+            county_deaths = rows[0][5]
+            if county_cases == None:
+                county_cases = 0
+            if county_deaths == None:
+                county_deaths = 0
 
         print("county_cases: ",county_cases,"; county_deaths: ",county_deaths)
 
@@ -201,61 +199,60 @@ def findDateCounty():
         rows = cur.fetchall()
         if not rows:
             print("Invalid prison name.")
-            return redirect(url_for('users', county_cases=0, county_deaths=0, residents_confirmed=0, residents_deaths=0, 
-                                staff_confirmed=0, staff_deaths=0))
-
-        cur.execute("SELECT * FROM prison_cases WHERE Date='"+date+"' AND Name='"+prison+"'")
-        rows = cur.fetchall()
-        if not rows:
-            print("Invalid date; moving to closest earliest date.")
-            while not rows:
-                array = date.split('-')
-                array[1] = array[1].lstrip('0')
-                array[2] = array[2].lstrip('0')
-                if int(array[0]) < 2020:
-                    rows= [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-                else:
-                    print(array)
-                    if int(array[2]) > 1:
-                        array[2] = int(array[2]) - 1
-                    elif int(array[1]) > 1:
-                        array[2] = 31
-                        array[1] = int(array[1]) - 1
-                    else :
-                        array[0] = int(array[0]) - 1
-                        array[1] = 12
-                        array[2] = 31
-
-                    if int(array[1]) < 10:
-                        date = str(array[0])+"-0"+str(array[1])
+        else:
+            cur.execute("SELECT * FROM prison_cases WHERE Date='"+date+"' AND Name='"+prison+"'")
+            rows = cur.fetchall()
+            if not rows:
+                print("Invalid date; moving to closest earliest date.")
+                while not rows:
+                    array = date.split('-')
+                    array[1] = array[1].lstrip('0')
+                    array[2] = array[2].lstrip('0')
+                    if int(array[0]) < 2020:
+                        rows= [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
                     else:
-                        date = str(array[0])+"-"+str(array[1])
+                        print(array)
+                        if int(array[2]) > 1:
+                            array[2] = int(array[2]) - 1
+                        elif int(array[1]) > 1:
+                            array[2] = 31
+                            array[1] = int(array[1]) - 1
+                        else :
+                            array[0] = int(array[0]) - 1
+                            array[1] = 12
+                            array[2] = 31
 
-                    if int(array[2]) < 10:
-                        date = date+"-0"+str(array[2])
-                    else:
-                        date = date+"-"+str(array[2])
+                        if int(array[1]) < 10:
+                            date = str(array[0])+"-0"+str(array[1])
+                        else:
+                            date = str(array[0])+"-"+str(array[1])
 
-                    print(date)
-                    cur.execute("SELECT * FROM prison_cases WHERE Date='"+date+"' AND Name='"+prison+"'")
-                    rows = cur.fetchall()
-                    print(rows)
-        else: 
-            for row in rows:
-                print(row)
+                        if int(array[2]) < 10:
+                            date = date+"-0"+str(array[2])
+                        else:
+                            date = date+"-"+str(array[2])
 
-        residents_confirmed = rows[0][6]
-        staff_confirmed = rows[0][7]
-        residents_deaths = rows[0][8]
-        staff_deaths = rows[0][9]
-        if residents_confirmed == None:
-            residents_confirmed=0
-        if staff_confirmed == None:
-            staff_confirmed=0
-        if residents_deaths == None:
-            residents_deaths=0
-        if staff_deaths == None:
-            staff_deaths=0
+                        print(date)
+                        cur.execute("SELECT * FROM prison_cases WHERE Date='"+date+"' AND Name='"+prison+"'")
+                        rows = cur.fetchall()
+                        print(rows)
+            else: 
+                for row in rows:
+                    print(row)
+
+            residents_confirmed = rows[0][6]
+            staff_confirmed = rows[0][7]
+            residents_deaths = rows[0][8]
+            staff_deaths = rows[0][9]
+            if residents_confirmed == None:
+                residents_confirmed=0
+            if staff_confirmed == None:
+                staff_confirmed=0
+            if residents_deaths == None:
+                residents_deaths=0
+            if staff_deaths == None:
+                staff_deaths=0
+
         print("residents_confirmed:", residents_confirmed," staff_confirmed:",staff_confirmed,"residents_deaths",residents_deaths,"staff_deaths:",staff_deaths)
         #return render_template('homepage.html', county_cases=county_cases, county_deaths=county_deaths)
         return redirect(url_for('users', county_cases=county_cases, county_deaths=county_deaths, residents_confirmed=residents_confirmed, residents_deaths=residents_deaths, 
@@ -272,64 +269,63 @@ def findDateCounty():
         rows1 = cur1.fetchall()
         if not rows1:
             print("Invalid prison name.")
-            return redirect(url_for('users', county_cases=0, county_deaths=0, residents_confirmed=0, residents_deaths=0, 
-                                staff_confirmed=0, staff_deaths=0))
-
-        cur1.execute("SELECT * FROM prison_cases WHERE Date='"+date+"' AND Name='"+prison+"'")
-        rows1 = cur1.fetchall()
-        if not rows1:
-            print("Invalid date; moving to closest earliest date.")
-            date1 = date
-            while not rows1:
-                array = date.split('-')
-                array[1] = array[1].lstrip('0')
-                array[2] = array[2].lstrip('0')
-                if int(array[0]) < 2020:
-                    rows1 = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-                else:
-                    print(array)
-                    if int(array[2]) > 1:
-                        array[2] = int(array[2]) - 1
-                    elif int(array[1]) > 1:
-                        array[2] = 31
-                        array[1] = int(array[1]) - 1
-                    else :
-                        array[0] = int(array[0]) - 1
-                        array[1] = 12
-                        array[2] = 31
-
-                    if int(array[1]) < 10:
-                        date = str(array[0])+"-0"+str(array[1])
+        else:
+            cur1.execute("SELECT * FROM prison_cases WHERE Date='"+date+"' AND Name='"+prison+"'")
+            rows1 = cur1.fetchall()
+            if not rows1:
+                print("Invalid date; moving to closest earliest date.")
+                date1 = date
+                while not rows1:
+                    array = date.split('-')
+                    array[1] = array[1].lstrip('0')
+                    array[2] = array[2].lstrip('0')
+                    if int(array[0]) < 2020:
+                        rows1 = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
                     else:
-                        date = str(array[0])+"-"+str(array[1])
+                        print(array)
+                        if int(array[2]) > 1:
+                            array[2] = int(array[2]) - 1
+                        elif int(array[1]) > 1:
+                            array[2] = 31
+                            array[1] = int(array[1]) - 1
+                        else :
+                            array[0] = int(array[0]) - 1
+                            array[1] = 12
+                            array[2] = 31
 
-                    if int(array[2]) < 10:
-                        date = date+"-0"+str(array[2])
-                    else:
-                        date = date+"-"+str(array[2])
+                        if int(array[1]) < 10:
+                            date = str(array[0])+"-0"+str(array[1])
+                        else:
+                            date = str(array[0])+"-"+str(array[1])
 
-                    print(date)
-                    cur1.execute("SELECT * FROM prison_cases WHERE Date='"+date+"' AND Name='"+prison+"'")
-                    rows1 = cur1.fetchall()
-                    print(rows1)
+                        if int(array[2]) < 10:
+                            date = date+"-0"+str(array[2])
+                        else:
+                            date = date+"-"+str(array[2])
 
-            date = date1
-        else: 
-            for row in rows1:
-                print(row)
+                        print(date)
+                        cur1.execute("SELECT * FROM prison_cases WHERE Date='"+date+"' AND Name='"+prison+"'")
+                        rows1 = cur1.fetchall()
+                        print(rows1)
 
-        residents_confirmed = rows1[0][6]
-        staff_confirmed = rows1[0][7]
-        residents_deaths = rows1[0][8]
-        staff_deaths = rows1[0][9]
-        if residents_confirmed == None:
-            residents_confirmed=0
-        if staff_confirmed == None:
-            staff_confirmed=0
-        if residents_deaths == None:
-            residents_deaths=0
-        if staff_deaths == None:
-            staff_deaths=0
+                date = date1
+            else: 
+                for row in rows1:
+                    print(row)
+
+            residents_confirmed = rows1[0][6]
+            staff_confirmed = rows1[0][7]
+            residents_deaths = rows1[0][8]
+            staff_deaths = rows1[0][9]
+            if residents_confirmed == None:
+                residents_confirmed=0
+            if staff_confirmed == None:
+                staff_confirmed=0
+            if residents_deaths == None:
+                residents_deaths=0
+            if staff_deaths == None:
+                staff_deaths=0
+
         print("residents_confirmed:", residents_confirmed," staff_confirmed:",staff_confirmed,"residents_deaths",residents_deaths,"staff_deaths:",staff_deaths)
 
         conn = None
@@ -343,55 +339,53 @@ def findDateCounty():
         rows = cur.fetchall()
         if not rows:
             print("Invalid county name")
-            return redirect(url_for('users', county_cases=0, county_deaths=0, residents_confirmed=0, residents_deaths=0, 
-                                staff_confirmed=0, staff_deaths=0))
-
-        cur.execute("SELECT * FROM county_cases WHERE date='"+date+"' AND county='"+county+"' AND state='California'")
-        rows = cur.fetchall()
-        if not rows:
-            print("Invalid date; moving to closest earliest date.")
-            while not rows:
-                array = date.split('-')
-                array[1] = array[1].lstrip('0')
-                array[2] = array[2].lstrip('0')
-                if int(array[0]) < 2020:
-                    rows = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-                else:
-                    print(array)
-                    if int(array[2]) > 1:
-                        array[2] = int(array[2]) - 1
-                    elif int(array[1]) > 1:
-                        array[2] = 31
-                        array[1] = int(array[1]) - 1
-                    else :
-                        array[0] = int(array[0]) - 1
-                        array[1] = 12
-                        array[2] = 31
-
-                    if int(array[1]) < 10:
-                        date = str(array[0])+"-0"+str(array[1])
+        else:
+            cur.execute("SELECT * FROM county_cases WHERE date='"+date+"' AND county='"+county+"' AND state='California'")
+            rows = cur.fetchall()
+            if not rows:
+                print("Invalid date; moving to closest earliest date.")
+                while not rows:
+                    array = date.split('-')
+                    array[1] = array[1].lstrip('0')
+                    array[2] = array[2].lstrip('0')
+                    if int(array[0]) < 2020:
+                        rows = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
                     else:
-                        date = str(array[0])+"-"+str(array[1])
+                        print(array)
+                        if int(array[2]) > 1:
+                            array[2] = int(array[2]) - 1
+                        elif int(array[1]) > 1:
+                            array[2] = 31
+                            array[1] = int(array[1]) - 1
+                        else :
+                            array[0] = int(array[0]) - 1
+                            array[1] = 12
+                            array[2] = 31
 
-                    if int(array[2]) < 10:
-                        date = date+"-0"+str(array[2])
-                    else:
-                        date = date+"-"+str(array[2])
+                        if int(array[1]) < 10:
+                            date = str(array[0])+"-0"+str(array[1])
+                        else:
+                            date = str(array[0])+"-"+str(array[1])
 
-                    print(date)
-                    cur.execute("SELECT * FROM county_cases WHERE date='"+date+"' AND county='"+county+"' AND state='California'")
-                    rows = cur.fetchall()
-                    print(rows)
-        else: 
-            for row in rows:
-                print(row)
+                        if int(array[2]) < 10:
+                            date = date+"-0"+str(array[2])
+                        else:
+                            date = date+"-"+str(array[2])
 
-        county_cases = rows[0][4]
-        county_deaths = rows[0][5]
-        if county_cases == None:
-            county_cases = 0
-        if county_deaths == None:
-            county_deaths = 0
+                        print(date)
+                        cur.execute("SELECT * FROM county_cases WHERE date='"+date+"' AND county='"+county+"' AND state='California'")
+                        rows = cur.fetchall()
+                        print(rows)
+            else: 
+                for row in rows:
+                    print(row)
+
+            county_cases = rows[0][4]
+            county_deaths = rows[0][5]
+            if county_cases == None:
+                county_cases = 0
+            if county_deaths == None:
+                county_deaths = 0
 
         print("county_cases: ",county_cases,"; county_deaths: ",county_deaths)
 
@@ -406,11 +400,18 @@ def findDatePrison():
 
 @app.route('/', methods=['GET', 'POST'])
 def users():
-    try:
-        return render_template('homepage.html', county_cases = request.args.get('county_cases'), county_deaths = request.args.get('county_deaths'), residents_confirmed = request.args.get('residents_confirmed'), 
-                               residents_deaths = request.args.get('residents_deaths'), staff_confirmed = request.args.get('staff_confirmed'), staff_deaths = request.args.get('staff_deaths'))
-    except Exception as e:
-        print(e)
+    if request.args.get('county_cases') == None:
+        try:
+            return render_template('homepage.html', county_cases=0, county_deaths=0, residents_confirmed=0, residents_deaths=0, 
+                                staff_confirmed=0, staff_deaths=0)
+        except Exception as e:
+            print(e)
+    else:
+        try:
+            return render_template('homepage.html', county_cases = request.args.get('county_cases'), county_deaths = request.args.get('county_deaths'), residents_confirmed = request.args.get('residents_confirmed'), 
+                                   residents_deaths = request.args.get('residents_deaths'), staff_confirmed = request.args.get('staff_confirmed'), staff_deaths = request.args.get('staff_deaths'))
+        except Exception as e:
+            print(e)
 
 if __name__ == '__main__':
     app.run()

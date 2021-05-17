@@ -1,4 +1,5 @@
 import sqlite3
+import datetime
 
 from flask import Flask, render_template, request, flash, redirect, url_for
 from tables import Results
@@ -40,35 +41,21 @@ def shading():
 
     if not rows:
         print("Invalid date; moving to closest earliest date.")
+
+        day_offset = 0
+
         while not rows:
-            array = date.split('-')
-            array[1] = array[1].lstrip('0')
-            array[2] = array[2].lstrip('0')
-            print(array)
-            if int(array[2]) > 1:
-                array[2] = int(array[2]) - 1
-            elif int(array[1]) > 1:
-                array[2] = 31
-                array[1] = int(array[1]) - 1
-            else :
-                array[0] = int(array[0]) - 1
-                array[1] = 12
-                array[2] = 31
+            today = datetime.datetime.now()
+            today -= datetime.timedelta(days=day_offset)
+            date = today.strftime("%Y-%m-%d")
 
-            if int(array[1]) < 10:
-                date = str(array[0])+"-0"+str(array[1])
-            else:
-                date = str(array[0])+"-"+str(array[1])
 
-            if int(array[2]) < 10:
-                date = date+"-0"+str(array[2])
-            else:
-                date = date+"-"+str(array[2])
 
             print(date)
             cur.execute("SELECT * FROM county_cases WHERE date='"+date+"' AND county='"+county+"' AND state='California'")
             rows = cur.fetchall()
             print(rows)
+            day_offset += 1
 
     else: 
         for row in rows:
@@ -100,8 +87,6 @@ def findDateCounty():
     
     print(request.form['Date: '])
     date = request.form['Date: ']
-    if (date == ''):
-        date = '2021-03-21'
 
     print(request.form['County: '])
     county = request.form['County: ']
@@ -133,37 +118,24 @@ def findDateCounty():
         cur = conn.cursor()
         cur.execute("SELECT * FROM county_cases WHERE date='"+date+"' AND county='"+county+"' AND state='California'")
         rows = cur.fetchall()
+
         if not rows:
             print("Invalid date; moving to closest earliest date.")
+
+            day_offset = 0
+            today = datetime.datetime.now()
+
             while not rows:
-                array = date.split('-')
-                array[1] = array[1].lstrip('0')
-                array[2] = array[2].lstrip('0')
-                print(array)
-                if int(array[2]) > 1:
-                    array[2] = int(array[2]) - 1
-                elif int(array[1]) > 1:
-                    array[2] = 31
-                    array[1] = int(array[1]) - 1
-                else :
-                    array[0] = int(array[0]) - 1
-                    array[1] = 12
-                    array[2] = 31
+                today -= datetime.timedelta(days=day_offset)
+                date = today.strftime("%Y-%m-%d")
 
-                if int(array[1]) < 10:
-                    date = str(array[0])+"-0"+str(array[1])
-                else:
-                    date = str(array[0])+"-"+str(array[1])
-
-                if int(array[2]) < 10:
-                    date = date+"-0"+str(array[2])
-                else:
-                    date = date+"-"+str(array[2])
 
                 print(date)
                 cur.execute("SELECT * FROM county_cases WHERE date='"+date+"' AND county='"+county+"' AND state='California'")
                 rows = cur.fetchall()
                 print(rows)
+                day_offset += 1
+
         else: 
             for row in rows:
                 print(row)
@@ -192,35 +164,19 @@ def findDateCounty():
         rows = cur.fetchall()
         if not rows:
             print("Invalid date; moving to closest earliest date.")
-            while not rows:
-                array = date.split('-')
-                array[1] = array[1].lstrip('0')
-                array[2] = array[2].lstrip('0')
-                print(array)
-                if int(array[2]) > 1:
-                    array[2] = int(array[2]) - 1
-                elif int(array[1]) > 1:
-                    array[2] = 31
-                    array[1] = int(array[1]) - 1
-                else :
-                    array[0] = int(array[0]) - 1
-                    array[1] = 12
-                    array[2] = 31
 
-                if int(array[1]) < 10:
-                    date = str(array[0])+"-0"+str(array[1])
-                else:
-                    date = str(array[0])+"-"+str(array[1])
+            day_offset = 0
+            today = datetime.datetime.now()
 
-                if int(array[2]) < 10:
-                    date = date+"-0"+str(array[2])
-                else:
-                    date = date+"-"+str(array[2])
+            while not rows:  
+                today -= datetime.timedelta(days=day_offset)
+                date = today.strftime("%Y-%m-%d")
 
                 print(date)
                 cur.execute("SELECT * FROM prison_cases WHERE Date='"+date+"' AND Name='"+prison+"'")
                 rows = cur.fetchall()
                 print(rows)
+                day_offset += 1
         else: 
             for row in rows:
                 print(row)

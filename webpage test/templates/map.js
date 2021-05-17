@@ -24,7 +24,7 @@
 
 	info.update = function (props) {
 		this._div.innerHTML = '<h4>Covid Data</h4>' +  (props ?
-			'County Name: <b>' + props.name + '</b><br />' + 'Add General Covid Data Here' + ' ex: people infected'
+			'County Name: <b>' + props.name + '</b><br />'
 			: 'Hover over a state or click on it info');
 
 		
@@ -135,7 +135,7 @@
 
 	function onEachFeature(feature, layer) {
 
-		layer.bindPopup('County Name: ' + feature.properties.name + '</b><br /> Place General County Data Here');
+		layer.bindPopup('County Name: ' + feature.properties.name );
 
 		layer.on({
 			mouseover: highlightFeature,
